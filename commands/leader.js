@@ -10,7 +10,7 @@ module.exports = { //untuk mengaitakan file pada main.js
             message.channel.send('MaCherie');
         }else{
             message.channel.send('kamu tidak di izinkan menggunakan perintah ini!');
-            message.member.roles.add(role).catch(console.error); //untuk menambahkan anggtoa ke Roles tersebut
+        //message.member.roles.add(role).catch(console.error); //untuk menambahkan anggotaa ke Roles tersebut
         //message.member.roles.remove('830651832430886934');// //untuk menghapus anggtoa di Roles tersebut
         }
     }
