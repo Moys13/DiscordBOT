@@ -1,46 +1,59 @@
 const Discord = require('discord.js');
 
-const client = new Discord.Client();
+const bot = new Discord.Client;
 
-const prefix = 'rv:'//awal pesan dari command prefix=revo:
+//token Discord
+const token = 'ODMwNTAwODc3NjUwODg2Njg4.YHHmNw._0WLyawZKiAah-vm6wmUr1CL2tk';
+bot.login(token);
+
+//Awal penyebutan dari commands 
+var prefix = 'rv: '
 
 //////membuat command menggunakan file/ mengaitkan file//////
 const fs = require('fs');
-
-client.commands = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
-    const command = require(`./commands/${file}`); // mengaitkan file commands.js
-    client.commands.set(command.name, command);
+const commands = new Discord.Collection();
+const files = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+for (const file of files) {
+    const command = require(`./commands/${file}`);
+    commands.set(command.name, command)
 }
-/////////////////////////////////////////////////////////////
 
-client.once('ready', () => {
-    console.log('Revolusioner is online!');
-});
+//Jika bot nya online akan ada tulisan di terminal
+bot.once('ready', () => {
+    console.log('Bot telah online!')
+})
 
-//untuk memulai Command.
-client.on('message', message =>{
-    if(!message.content.startsWith(prefix) || message.author.bot) return; //jika pesan tidak di awali prefix.
+//Memulai Commands
+bot.on('message', message => {
+    let args = message.content.substring(prefix.length).split(' ');
 
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
-
-    //Command-Command BOT tanpa menggunkan file
-    /*if(command === 'youtube'){
-        message.channel.send('Ma&Mon Channel'); //mengirim pesan ke Channel
-    }else if(command === 'leader'){
-        message.channel.send('MaCherie');
-    }*/
-
-    //Cara 1 untuk memanggil command pada file
-    if(command === 'youtube'){
-        client.commands.get('youtube').execute(message, args); //untuk memanggil dari file youtube.js
-    }else if(command == 'leader'){
-        client.commands.get('leader').execute(message, args);
+    switch (args[0]) {
+        case 'ping':
+            commands.get('ping').execute(message);
+            break;
+        case 'help':
+            commands.get('help').execute(message, args);
+            break;
+            //Case command Emmbed
+        case 'cobaembed':
+            const embed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .addFields({
+                    name: 'percobaan 1',
+                    value: 'ini adalah percobaa 1'
+                }, {
+                    name: '\u200B',
+                    value: '\u200B'
+                }, {
+                    name: 'percobaan 2',
+                    value: 'ini adalah pecobaan 2',
+                    inline: true
+                }, {
+                    name: 'percobaan 3',
+                    value: 'ini adalah percobaan 3',
+                    inline: true
+                }, )
+            message.channel.send(embed);
+            break;
     }
-
 });
-
-client.login('ODMwNTAwODc3NjUwODg2Njg4.YHHmNw._0WLyawZKiAah-vm6wmUr1CL2tk');
