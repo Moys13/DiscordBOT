@@ -4,7 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js",
+    "node .": "node run main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moys13/DiscordBOT.git"
   },
   "author": "Moyo",
   "license": "ISC",
